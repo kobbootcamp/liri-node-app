@@ -6,6 +6,7 @@ var axios = require("axios");
 var messagePrompt = ""
 var keys = require("./keys.js");
 const opn = require('opn');
+const fs = require('fs-extra')
 var spotify = new Spotify(keys.spotify);
 
 
@@ -23,7 +24,7 @@ inquirer.prompt([
 
     switch (firstResponse.doStuff) {
         case "concert-this":
-            messagePrompt = "What is the name of the artist?"
+            messagePrompt = "What is the name of the artist/band?"
             autoPlayMessage = ""
             break;
         case "spotify-this-song":
@@ -36,9 +37,10 @@ inquirer.prompt([
             break;
         case "do-what-it-says":
             messagePrompt = "Okay, I'll do what it says."
+            autoPlayMessage = ""
             break;
     }
-
+    
     inquirer.prompt([
         {
             type: "input",
@@ -54,6 +56,7 @@ inquirer.prompt([
 
         // After the prompt, store the user's response in a variable called location.
     ]).then(function (response) {
+
         // console.log(response.artist)
         var userResponse = response.artist;
         var autoPlay = response.confirm;
@@ -66,27 +69,15 @@ inquirer.prompt([
                 findSong(userResponse, autoPlay);
                 break;
             case "movie-this":
-            console.log(userResponse, autoPlay);
-                findMovie(userResponse);
+            // console.log(userResponse, autoPlay);
+                findMovie(userResponse, autoPlay);
                 break;
             case "do-what-it-says":
-                messagePromt = "Okay, I'll do what it says."
+            doWhatItSays()
+                // messagePromt = "Okay, I'll do what it says."
                 break;
         }
 
-        // findVenue(band)
-        // console.log(location.userInput);
-        // var artist = response.artist;
-
-        // axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=13722599&date=upcoming")
-        //     .then(function (bitResponse) {
-        //         // console.log(JSON.stringify(response, null,2))
-        //         console.log(artist + " will play at " + bitResponse.data[0].venue.name + " in " + bitResponse.data[0].venue.city + " on " + moment(bitResponse.data[0].datetime).format("MMMM Do YYYY, h:mm:ss a"))
-
-        //     })
-        //     .catch(function (err) {
-        //         console.log(err);
-        //     })
     });
 
 
@@ -125,7 +116,14 @@ function findSong(songName, autoPlay) {
 
 
             if (autoPlay) {
-                opn(response.tracks.items[0].external_urls.spotify)
+
+                //wait to seconds, then play song
+                // setTimeout(function () {
+                countdownToPlay()
+                   opn(response.tracks.items[0].external_urls.spotify);
+
+            //    }, 1000);
+                
             }
             //   console.log(response.tracks);
 
@@ -145,15 +143,19 @@ function findMovie(movieName, autoPlay) {
             console.log("YEAR: " + response.data.Year)
             console.log("RATED: " + response.data.Rated)
             console.log("IMDB Rating: " + response.data.imdbRating)
-            console.log("ROTTEN TOMATOES RATING: " + response.data.Ratings[1].Value)
+            // console.log("ROTTEN TOMATOES RATING: " + response.data.Ratings[1].Value)
             console.log("COUNTRY: " + response.data.Country)
             console.log("PLOT: " + response.data.Plot)
             console.log("ACTORS: " + response.data.Actors)
-            // console.log("POSTER: " + response.data.Poster)
+            console.log("POSTER: " + response.data.Poster)
 
 
             if (autoPlay) {
-                opn(response.data.Poster)
+                // countdownToPlay()
+                setTimeout(function () {
+                    opn(response.data.Poster);
+                }, 1000);
+                
             }
         })
         .catch(function (err) {
@@ -161,6 +163,66 @@ function findMovie(movieName, autoPlay) {
         })
 };
 
+function countdownToPlay () {
+// console.log ("playing in...")
+    setTimeout(function () {
+                    
+    console.log ("3...")
+
+    setTimeout(function () {
+                    
+        console.log ("2...")
+    
+        setTimeout(function () {
+                    
+            console.log ("1...")
+        
+            }, 1000);
+
+
+        }, 750);
+
+
+    }, 500);
+
+
+
+
+};
+
+
+function doWhatItSays() {
+
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+        // If the code experiences any errors it will log the error to the console.
+        if (error) {
+          return console.log(error);
+        }
+            
+        var dataArr = data.split(",");
+ 
+        // console.log(dataArr);
+
+        switch (dataArr[0]) {
+            case "concert-this":
+                findVenue(dataArr[1]);
+                break;
+            case "spotify-this-song":
+                findSong(dataArr[1], null);
+                break;
+            case "movie-this":
+            // console.log(userResponse, autoPlay);
+                findMovie(dataArr[1], null);
+                break;
+            case "do-what-it-says":
+                console.log("I'm already doing that.")
+                // messagePromt = "Okay, I'll do what it says."
+                break;
+        }
+      
+      });
+    }
 
 
 
