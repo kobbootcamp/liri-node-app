@@ -6,3 +6,11 @@ concert-this, Third Eye Blind, null
 spotify-this-song, Welcome to the Jungle, true
 movie-this, Ride Along, true
 do-what-it-says: spotify-this-song, "I Want it That Way",  true
+spotify-this-song, The Sign, true
+spotify-this-song, The Sign, true
+spotify-this-song, n, false
+spotify-this-song, The Sign Ace of Base, false
+spotify-this-song, The Sign Ace of Base, true
+spotify-this-song, The Sign Ace of Base, false
+spotify-this-song, The Sign Ace of Base, false
+movie-this, Mr. Nobody, false

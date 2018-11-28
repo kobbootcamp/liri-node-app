@@ -75,7 +75,7 @@ inquirer.prompt([
                     type: "confirm",
                     message: autoPlayMessage,
                     name: "confirm",
-                    default: true
+                    default: false
                 }
 
             ]).then(function (response) {
@@ -83,6 +83,12 @@ inquirer.prompt([
                 //load responses into variables
                 var userResponse = response.artist;
                 var autoPlay = response.confirm;
+
+                if (userResponse === "") {
+                    userResponse = "The Sign Ace of Base";
+                    autoPlay = false;
+                }
+
 
                 //Call findSong function with artist and autoplay boolean
                 findSong(userResponse, autoPlay);
@@ -111,7 +117,7 @@ inquirer.prompt([
                     type: "confirm",
                     message: autoPlayMessage,
                     name: "confirm",
-                    default: true
+                    default: false
                 }
 
             ]).then(function (response) {
@@ -120,6 +126,10 @@ inquirer.prompt([
                 var userResponse = response.artist;
                 var autoPlay = response.confirm
 
+                if (userResponse === "") {
+                    userResponse = "Mr. Nobody";
+                    autoPlay = false;
+                }
                 //call the findMovie function
                 findMovie(userResponse, autoPlay);
                 logResults(firstResponse.doStuff, userResponse, autoPlay);
