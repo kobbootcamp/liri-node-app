@@ -1,3 +1,8 @@
-concert-this, Lionel Ritchie, nullspotify-this-song, On the pontoon, true
-movie-this, Minnie Mouse, true
-movie-this, Grease, true
+
+concert-this, Third Eye , null
+concert-this, Third Eye Blind, null
+spotify-this-song, Welome to the Jungle, true
+concert-this, Third Eye Blind, null
+spotify-this-song, Welcome to the Jungle, true
+movie-this, Ride Along, true
+do-what-it-says: spotify-this-song, "I Want it That Way",  true
