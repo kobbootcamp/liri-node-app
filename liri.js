@@ -50,7 +50,9 @@ inquirer.prompt([
 
                 //Call the findVenue function
                 findVenue(userResponse);
+                logResults(firstResponse.doStuff, userResponse, null);
             })
+            
             break;
 
         //if spotify-this-song is the response...
@@ -84,7 +86,9 @@ inquirer.prompt([
 
                 //Call findSong function with artist and autoplay boolean
                 findSong(userResponse, autoPlay);
+                logResults(firstResponse.doStuff, userResponse, autoPlay);
             })
+            
             break;
 
         //if response is movie-this
@@ -118,7 +122,9 @@ inquirer.prompt([
 
                 //call the findMovie function
                 findMovie(userResponse, autoPlay);
+                logResults(firstResponse.doStuff, userResponse, autoPlay);
             })
+            
             break;
 
         case "do-what-it-says":
@@ -138,7 +144,7 @@ inquirer.prompt([
 
 
 function findVenue(bandName) {
-//uses axios to call bandsintown API
+    //uses axios to call bandsintown API
     axios.get("https://rest.bandsintown.com/artists/" + bandName + "/events?app_id=13722599&date=upcoming")
         .then(function (bitResponse) {
 
@@ -152,10 +158,10 @@ function findVenue(bandName) {
 };
 
 function findSong(songName, autoPlay) {
-//uses spotify  search to call spotify
+    //uses spotify  search to call spotify
     spotify.search({ type: 'track', query: songName })
         .then(function (response) {
-        
+
             //console log the results
             console.log("TRACK: " + response.tracks.items[0].name);
             console.log("ARTIST: " + response.tracks.items[0].artists[0].name);
@@ -176,7 +182,7 @@ function findSong(songName, autoPlay) {
 
 
 function findMovie(movieName, autoPlay) {
-// uses axios to call omdb API
+    // uses axios to call omdb API
     axios.get("http://www.omdbapi.com/?t=" + movieName + "&apikey=44a67c37")
         .then(function (response) {
 
@@ -193,7 +199,7 @@ function findMovie(movieName, autoPlay) {
 
 
             if (autoPlay) {
-                
+
                 //if autoplay, pause for only a second and the display the poster
                 setTimeout(function () {
                     opn(response.data.Poster);
@@ -208,7 +214,7 @@ function findMovie(movieName, autoPlay) {
 };
 
 function countdownToPlay() {
-    
+
     //Pause and then return 
     setTimeout(function () {
 
@@ -231,7 +237,7 @@ function countdownToPlay() {
     }, 500);
 
 
-return true;
+    return true;
 
 };
 
@@ -264,9 +270,26 @@ function doWhatItSays() {
                 console.log("I'm already doing that.")
                 break;
         }
-
+        logResults("do-what-it-says: " +  dataArr[0], dataArr[1],dataArr[2])
     });
-}
+    
+};
+
+// var fs = require("fs");
+
+function logResults(action, response, autoplay) {
+
+    var text = action + ", " + response + ", " + autoplay + "\n";
+
+    fs.appendFile("log.txt", text, function (err) {
+
+        if (err) {
+            console.log(err);
+        }
+
+    })
+};
+
 
 
 
