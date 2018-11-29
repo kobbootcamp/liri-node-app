@@ -163,7 +163,7 @@ function findVenue(bandName) {
         })
         //cathes and display errors, if any
         .catch(function (err) {
-            console.log(err);
+            console.log("No concert found");
         })
 };
 
@@ -186,7 +186,7 @@ function findSong(songName, autoPlay) {
         })
         //catch and display error(s), if any
         .catch(function (err) {
-            console.log(err);
+            console.log("No song found.");
         });
 }
 
@@ -219,7 +219,7 @@ function findMovie(movieName, autoPlay) {
         })
         //catch and display errors, if any
         .catch(function (err) {
-            console.log(err);
+            console.log("No movie found");
         })
 };
 
@@ -294,7 +294,7 @@ function logResults(action, response, autoplay) {
     fs.appendFile("log.txt", text, function (err) {
 
         if (err) {
-            console.log(err);
+            console.log("Danger!  Danger Will Robinson!");
         }
 
     })

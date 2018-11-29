@@ -14,3 +14,6 @@ spotify-this-song, The Sign Ace of Base, true
 spotify-this-song, The Sign Ace of Base, false
 spotify-this-song, The Sign Ace of Base, false
 movie-this, Mr. Nobody, false
+concert-this, Hanson, null
+concert-this, Prince, null
+concert-this, Prince, null
