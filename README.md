@@ -14,3 +14,5 @@ The user has the choice of the following:
 "do-what-it-says": read the contents of a file (random.txt) file and follow those choices.
 
 I've add a twist that the songs can be played and movie posters can be viewed.
+
+LIRI is a command line node.js app that uses Inquirer, Spotify, Moment.js, Axios, Keys, Fs, and Opn npm packages.
